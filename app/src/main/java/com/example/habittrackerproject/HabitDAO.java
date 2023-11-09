@@ -34,6 +34,10 @@ public interface HabitDAO {
 
 
     // to read all habits in the database (probably to order by habit priority or name)
-    //@Query("Select * FROM habit_table")
-    //LiveData<List<Habit>> get;
+//    @Query("Select * FROM habit_table")
+//    LiveData<List<Habit>> get;
+
+
+    @Query("SELECT * FROM habit_table")
+    List<Habit> getAllHabits();
 }

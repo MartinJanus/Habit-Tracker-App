@@ -2,58 +2,64 @@ package com.example.habittrackerproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
 
     EditText editTextHabitName;
-    Button buttonCreateHabit;
+    Button addHabitButton;
     HabitDatabase habitDatabase;
+
+    ListView habitListView;
+    List<Habit> habitList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextHabitName = findViewById(R.id.editTextHabitName);
-        buttonCreateHabit = findViewById(R.id.buttonCreateHabit);
-
         habitDatabase = HabitDatabase.getInstance(this);
+        habitListView = findViewById(R.id.habitListView);
+        addHabitButton  = findViewById(R.id.addHabitButton);
 
-        buttonCreateHabit.setOnClickListener(new View.OnClickListener(){
+        addHabitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
             public void onClick(View v) {
-                String habitName = editTextHabitName.getText().toString();
-                if(!habitName.isEmpty()) {
-                    Habit habit = new Habit(habitName);
-                    habit.setHabitName(habitName);
-                    insertHabit(habit);
-                } else {
-                    Toast.makeText(MainActivity.this,"Please Enter a habit", Toast.LENGTH_SHORT).show();
-                }
+                // Intent to go to HabitCreation
+                Intent intent = new Intent(MainActivity.this, HabitCreationActivity.class);
+                startActivity(intent);
 
-                //Get other habit details from editTexts and save them into database
-
-                //display toast to say habit created
-
-                Toast.makeText(MainActivity.this, "Habit Created: " + habitName, Toast.LENGTH_SHORT).show();
             }
         });
+
+        loadHabits();
     }
-    private void insertHabit(Habit habit) {
+
+
+
+    private void loadHabits() {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                habitDatabase.habitDAO().insert(habit);
+                habitList = habitDatabase.habitDAO().getAllHabits();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MainActivity.this, "Habit Created: " + habit.getHabitName(), Toast.LENGTH_SHORT).show();
+                        // Create an adapter to display habit names in the ListView
+                        ArrayAdapter<Habit> adapter = new ArrayAdapter<>(MainActivity.this,
+                                android.R.layout.simple_list_item_1, habitList);
+                        habitListView.setAdapter(adapter);
                     }
                 });
             }
