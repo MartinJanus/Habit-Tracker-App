@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                habitList = habitDatabase.habitDAO().getAllHabits();
+                //habitList = habitDatabase.habitDAO().getAllHabits(); //fix
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

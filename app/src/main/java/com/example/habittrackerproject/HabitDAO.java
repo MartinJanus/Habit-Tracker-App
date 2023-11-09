@@ -29,7 +29,8 @@ public interface HabitDAO {
 
 
     //deleting all habits
-
+    @Query("DELETE FROM habit_table")
+    void deleteAllHabits();
 
 
 
@@ -39,5 +40,5 @@ public interface HabitDAO {
 
 
     @Query("SELECT * FROM habit_table")
-    List<Habit> getAllHabits();
+    LiveData<List<Habit>> getAllHabits();
 }
