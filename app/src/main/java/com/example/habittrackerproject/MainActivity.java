@@ -1,6 +1,8 @@
 package com.example.habittrackerproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    ViewHabit viewHabit;
     EditText editTextHabitName;
     Button addHabitButton;
     HabitDatabase habitDatabase;
@@ -33,6 +35,17 @@ public class MainActivity extends AppCompatActivity {
         habitListView = findViewById(R.id.habitListView);
         addHabitButton  = findViewById(R.id.addHabitButton);
 
+
+        viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
+
+        viewHabit.getAllHabits().observe(this, new Observer<List<Habit>>() {
+            @Override
+            public void onChanged(List<Habit> habits) {
+                ArrayAdapter<Habit> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, habits);
+                habitListView.setAdapter(adapter);
+            }
+        });
+
         addHabitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -40,28 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, HabitCreationActivity.class);
                 startActivity(intent);
 
-            }
-        });
-
-        loadHabits();
-    }
-
-
-
-    private void loadHabits() {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                //habitList = habitDatabase.habitDAO().getAllHabits(); //fix
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Create an adapter to display habit names in the ListView
-                        ArrayAdapter<Habit> adapter = new ArrayAdapter<>(MainActivity.this,
-                                android.R.layout.simple_list_item_1, habitList);
-                        habitListView.setAdapter(adapter);
-                    }
-                });
             }
         });
     }

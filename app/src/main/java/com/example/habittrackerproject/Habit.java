@@ -23,8 +23,13 @@ public class Habit {
     }
 
     //Getters and Setters
-    public void setHabitName(String habitName){this.habitName = habitName;}
     public String getHabitName(){return habitName;}
+    public void setHabitName(String habitName){this.habitName = habitName;}
+
+    @Override
+    public String toString() {
+        return habitName;
+    }
 
     public int getId() {
         return id;

@@ -10,7 +10,6 @@ import androidx.room.Update;
 import java.util.List;
 
 
-//To Change *habit* to maybe habitmodel
 @androidx.room.Dao
 public interface HabitDAO {
 

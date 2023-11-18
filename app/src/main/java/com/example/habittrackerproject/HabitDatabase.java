@@ -28,22 +28,26 @@ public abstract class HabitDatabase extends RoomDatabase {
         return instance;
     }
 
-//    private static RoomDatabase.Callback roomCallBack = onCreate(db) -> {
-//        super.onCreate(db);
-//        new PopulateDbAsyncTask(instance).execute();
-//    };
-//
-//
-//    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-//
-//        PopulateDbAsyncTask(CourseDatabase instance) {
-//            Dao dao = instance.Dao();
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//
-//            return null;
-//        }
-//    }
+    private static RoomDatabase.Callback roomCallBack = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            //method is called when database is created and below to populate data
+            new PopulateDbAsyncTask(instance).execute();
+        }
+    };
+
+
+    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        PopulateDbAsyncTask(HabitDatabase instance) {
+            HabitDAO habitDAO = instance.habitDAO();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            return null;
+        }
+    }
 }

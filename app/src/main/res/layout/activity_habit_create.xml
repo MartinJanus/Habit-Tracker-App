@@ -7,16 +7,26 @@
     tools:context=".HabitCreationActivity">
 
 
-
     <EditText
         android:id="@+id/editTextHabitName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="296dp"
+        android:layout_marginTop="336dp"
         android:hint="Enter Habit Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter Habit Description"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCreateHabit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHabitName"
+        app:layout_constraintVertical_bias="0.226" />
 
     <Button
         android:id="@+id/buttonCreateHabit"
@@ -25,8 +35,10 @@
         android:text="Create Habit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextHabitName" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextHabitName"
+        app:layout_constraintVertical_bias="0.602" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
