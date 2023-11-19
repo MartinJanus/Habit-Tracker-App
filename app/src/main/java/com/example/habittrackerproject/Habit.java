@@ -11,7 +11,7 @@ public class Habit {
 
     //habit name
     private String habitName;
-//    private String habitDescription;
+    private String habitDescription;
 //    private String startDate;
 //    private String Duration;
     private boolean isCompleted;
@@ -19,13 +19,17 @@ public class Habit {
 
     //Constructor Class
 
-    public Habit(String habitName){
+    public Habit(String habitName, String habitDescription){
         this.habitName = habitName;
+        this.habitDescription = habitDescription;
     }
 
     //Getters and Setters
     public String getHabitName(){return habitName;}
     public void setHabitName(String habitName){this.habitName = habitName;}
+
+    public String getHabitDescription(){return habitDescription;}
+    public void setHabitDescription(String habitDescription){this.habitDescription = habitDescription;}
 
     @Override
     public String toString() {
