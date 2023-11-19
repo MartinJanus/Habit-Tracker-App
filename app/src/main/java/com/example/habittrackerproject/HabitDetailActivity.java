@@ -30,7 +30,7 @@ public class HabitDetailActivity extends AppCompatActivity {
                     public void onChanged(Habit habit) {
                         if (habit != null) {
                             habitNameTextView.setText(habit.getHabitName());
-                            habitDescriptionTextView.setText(habit.getHabitName());  //(getHabitDescription)
+                            habitDescriptionTextView.setText(habit.getHabitName());  //(getHabitDescription) same as habit name for now
                          }
                     }
                 });

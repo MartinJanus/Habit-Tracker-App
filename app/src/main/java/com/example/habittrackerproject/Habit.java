@@ -14,6 +14,7 @@ public class Habit {
 //    private String habitDescription;
 //    private String startDate;
 //    private String Duration;
+    private boolean isCompleted;
 
 
     //Constructor Class
@@ -39,4 +40,12 @@ public class Habit {
         this.id = id;
     }
 
-}
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    }

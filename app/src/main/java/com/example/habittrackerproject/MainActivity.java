@@ -3,29 +3,24 @@ package com.example.habittrackerproject;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     ViewHabit viewHabit;
-    EditText editTextHabitName;
     Button addHabitButton;
     HabitDatabase habitDatabase;
-
-    ListView habitListView;
-    List<Habit> habitList;
+    HabitListAdapter habitListAdapter;
+    RecyclerView habitRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,32 +28,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         habitDatabase = HabitDatabase.getInstance(this);
-        habitListView = findViewById(R.id.habitListView);
+        habitRecyclerView = findViewById(R.id.habitRecyclerView);
         addHabitButton  = findViewById(R.id.addHabitButton);
-
-
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
+
+
+        habitListAdapter = new HabitListAdapter();
+        habitRecyclerView.setAdapter(habitListAdapter);
+        habitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         viewHabit.getAllHabits().observe(this, new Observer<List<Habit>>() {
             @Override
             public void onChanged(List<Habit> habits) {
-                ArrayAdapter<Habit> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.habit_list_item, R.id.habitNameTextView, habits);
-                habitListView.setAdapter(adapter);
+                habitListAdapter.setHabits(habits);
             }
         });
 
         //Detailed View, Clicking on the Item.
 
-        habitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        habitListAdapter.setOnItemClickListener(new HabitListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Habit selectedHabit = (Habit) parent.getItemAtPosition(position);
+            public void onItemClick(Habit habit) {
                 Intent intent = new Intent(MainActivity.this, HabitDetailActivity.class);
-                intent.putExtra("habitID", selectedHabit.getId());
+                intent.putExtra("habitId", habit.getId()); // Pass habit ID
                 startActivity(intent);
             }
         });
 
+        // Adding Habits
         addHabitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
