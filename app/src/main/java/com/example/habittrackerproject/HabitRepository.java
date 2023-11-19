@@ -44,6 +44,8 @@ public class HabitRepository {
         return allHabits;
     }
 
+    public LiveData<Habit> getHabitById(int habitId) { return habitDAO.getHabitById(habitId); }
+
     private static class InsertHabitAsyncTask extends AsyncTask<Habit, Void, Void> {
         private HabitDAO habitDAO;
 

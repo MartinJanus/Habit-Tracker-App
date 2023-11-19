@@ -35,4 +35,6 @@ public class ViewHabit extends AndroidViewModel {
     public LiveData<List<Habit>> getAllHabits(){
         return allHabits;
     }
+
+    public LiveData<Habit> getHabitById(int habitId) { return habitRepository.getHabitById(habitId); }
 }

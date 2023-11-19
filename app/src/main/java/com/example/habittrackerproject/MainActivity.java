@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,8 +42,20 @@ public class MainActivity extends AppCompatActivity {
         viewHabit.getAllHabits().observe(this, new Observer<List<Habit>>() {
             @Override
             public void onChanged(List<Habit> habits) {
-                ArrayAdapter<Habit> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, habits);
+                ArrayAdapter<Habit> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.habit_list_item, R.id.habitNameTextView, habits);
                 habitListView.setAdapter(adapter);
+            }
+        });
+
+        //Detailed View, Clicking on the Item.
+
+        habitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Habit selectedHabit = (Habit) parent.getItemAtPosition(position);
+                Intent intent = new Intent(MainActivity.this, HabitDetailActivity.class);
+                intent.putExtra("habitID", selectedHabit.getId());
+                startActivity(intent);
             }
         });
 

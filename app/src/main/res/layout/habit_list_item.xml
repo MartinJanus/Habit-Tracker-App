@@ -8,13 +8,16 @@
 
     <TextView
         android:id="@+id/habitNameTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/completionCheckbox"/>
 
-    <RadioButton
-        android:id="@+id/completionRadioButton"
+    <CheckBox
+        android:id="@+id/completionCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#CBC3E3"/>
