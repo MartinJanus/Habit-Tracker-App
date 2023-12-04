@@ -12,8 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.HabitViewHolder> {
 
@@ -21,6 +24,8 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     private OnItemClickListener listener;
     private OnItemLongClickListener onItemLongClickListener;
     private CheckBox completedCheckBox;
+//    private HabitDatabase habitDatabase;
+//    private OnItemCheckedChangeListener onItemCheckedChangeListener;
 
 
     @NonNull
@@ -55,14 +60,31 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                 return true;
             }
         });
-        holder.completedCheckBox.setChecked(currentHabit.isCompleted());
-        holder.completedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                currentHabit.setIsCompleted(isChecked);
-                Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
-            }
-        });
+        //Setting date for habit completion
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        // holder.completedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //     @Override
+        //     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        //         currentHabit.setIsCompleted(isChecked);
+        //         currentHabit.setLastCompletedDate(currentDate);
+        //         Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
+        //         if (onItemCheckedChangeListener != null) {
+        //             onItemCheckedChangeListener.onItemCheckedChange(currentHabit);
+        //         }
+        //     }
+        // });
+
+//        holder.completedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                currentHabit.setIsCompleted(isChecked);
+//                currentHabit.setLastCompletedDate(currentDate);
+//                Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
+//                if (onItemCheckedChangeListener != null) {
+//                    onItemCheckedChangeListener.onItemCheckedChange(currentHabit);
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -82,6 +104,14 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     public interface OnItemLongClickListener {
         void onItemLongClick(Habit habit);
     }
+//
+//    interface OnItemCheckedChangeListener {
+//        void onItemCheckedChange(Habit habit);
+//    }
+//
+//    public void setOnItemCheckedChangeListener(OnItemCheckedChangeListener listener) {
+//        this.onItemCheckedChangeListener = listener;
+//    }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;

@@ -62,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        //Checkbox for Completed Habits
+//        habitListAdapter.setOnItemCheckedChangeListener(new HabitListAdapter.OnItemCheckedChangeListener() {
+//            @Override
+//            public void onItemCheckedChange(Habit habit) {
+//                new Thread(() -> habitDatabase.habitDAO().update(habit)).start();
+//            }
+//        });
+
         // Adding Habits
         addHabitButton.setOnClickListener(new View.OnClickListener(){
             @Override
