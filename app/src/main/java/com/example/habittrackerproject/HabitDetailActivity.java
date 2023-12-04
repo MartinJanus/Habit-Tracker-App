@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class HabitDetailActivity extends AppCompatActivity {
 
-    ViewHabit viewHabit;
+    private ViewHabit viewHabit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

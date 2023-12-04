@@ -28,6 +28,19 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextHabitName"
         app:layout_constraintVertical_bias="0.115" />
 
+
+    <EditText
+        android:id="@+id/editTextFrequency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter Habit Frequency"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCreateHabit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHabitName"
+        app:layout_constraintVertical_bias="0.31" />
+
     <Button
         android:id="@+id/buttonCreateHabit"
         android:layout_width="wrap_content"

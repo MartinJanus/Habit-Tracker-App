@@ -3,6 +3,7 @@ package com.example.habittrackerproject;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
 
     private List<Habit> habits = new ArrayList<>();
     private OnItemClickListener listener;
+    private OnItemLongClickListener onItemLongClickListener;
 
     @NonNull
     @Override
@@ -22,6 +24,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.habit_list_item, parent, false);
         return new HabitViewHolder(itemView);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
@@ -34,6 +37,16 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                 if (listener != null && adapterPosition != RecyclerView.NO_POSITION) {
                     listener.onItemClick(habits.get(adapterPosition));
                 }
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v){
+                int adapterPosition = holder.getAdapterPosition();
+                if (onItemLongClickListener != null && adapterPosition != RecyclerView.NO_POSITION) {
+                    onItemLongClickListener.onItemLongClick(habits.get(adapterPosition));
+                }
+                return true;
             }
         });
     }
@@ -52,8 +65,16 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
         void onItemClick(Habit habit);
     }
 
+    public interface OnItemLongClickListener {
+        void onItemLongClick(Habit habit);
+    }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.onItemLongClickListener = listener;
     }
 
     class HabitViewHolder extends RecyclerView.ViewHolder {

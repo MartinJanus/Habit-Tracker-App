@@ -16,11 +16,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ViewHabit viewHabit;
-    Button addHabitButton;
-    HabitDatabase habitDatabase;
-    HabitListAdapter habitListAdapter;
-    RecyclerView habitRecyclerView;
+    private ViewHabit viewHabit;
+    private Button addHabitButton;
+    private HabitDatabase habitDatabase;
+    private HabitListAdapter habitListAdapter;
+    private RecyclerView habitRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
         habitListAdapter = new HabitListAdapter();
         habitRecyclerView.setAdapter(habitListAdapter);
         habitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
         viewHabit.getAllHabits().observe(this, new Observer<List<Habit>>() {
             @Override
             public void onChanged(List<Habit> habits) {
@@ -53,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, HabitDetailActivity.class);
                 intent.putExtra("habitId", habit.getId()); // Pass habit ID
                 startActivity(intent);
+            }
+        });
+        
+        //Deleting Habits
+        habitListAdapter.setOnItemLongClickListener(new HabitListAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(Habit habit) {
+                viewHabit.delete(habit);
             }
         });
 

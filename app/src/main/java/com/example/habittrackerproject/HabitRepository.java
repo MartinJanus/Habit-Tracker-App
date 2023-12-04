@@ -10,8 +10,8 @@ import java.util.List;
 
 //Used to isolate data sources (Room Database) from the rest of the app
 public class HabitRepository {
-    HabitDAO habitDAO;
-    LiveData<List<Habit>> allHabits;
+    private HabitDAO habitDAO;
+    private LiveData<List<Habit>> allHabits;
 
     public HabitRepository(Application application) {
         HabitDatabase database = HabitDatabase.getInstance(application);
