@@ -1,9 +1,12 @@
 package com.example.habittrackerproject;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +20,8 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     private List<Habit> habits = new ArrayList<>();
     private OnItemClickListener listener;
     private OnItemLongClickListener onItemLongClickListener;
+    private CheckBox completedCheckBox;
+
 
     @NonNull
     @Override
@@ -26,6 +31,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     }
 
 
+    // Setting onClick listeners, CheckBoxes, and TextViews
     @Override
     public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
         Habit currentHabit = habits.get(position);
@@ -47,6 +53,14 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                     onItemLongClickListener.onItemLongClick(habits.get(adapterPosition));
                 }
                 return true;
+            }
+        });
+        holder.completedCheckBox.setChecked(currentHabit.isCompleted());
+        holder.completedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                currentHabit.setIsCompleted(isChecked);
+                Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
             }
         });
     }
@@ -80,9 +94,12 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     class HabitViewHolder extends RecyclerView.ViewHolder {
         private TextView habitNameTextView;
 
+        private CheckBox completedCheckBox;
+
         public HabitViewHolder(@NonNull View itemView) {
             super(itemView);
             habitNameTextView = itemView.findViewById(R.id.habitNameTextView);
+            completedCheckBox = itemView.findViewById(R.id.completionCheckbox);
         }
     }
 }
