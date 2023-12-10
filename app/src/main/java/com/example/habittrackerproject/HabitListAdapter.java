@@ -1,5 +1,6 @@
 package com.example.habittrackerproject;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +25,11 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     private OnItemClickListener listener;
     private OnItemLongClickListener onItemLongClickListener;
     private CheckBox completedCheckBox;
-//    private HabitDatabase habitDatabase;
-//    private OnItemCheckedChangeListener onItemCheckedChangeListener;
+    private HabitDatabase habitDatabase;
+    private OnItemCheckedChangeListener onItemCheckedChangeListener;
+
+    private Handler mainHandler;
+
 
 
     @NonNull
@@ -34,6 +38,16 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.habit_list_item, parent, false);
         return new HabitViewHolder(itemView);
     }
+    public HabitListAdapter(Handler mainHandler, HabitDatabase habitDatabase) {
+        this.mainHandler = mainHandler;
+        this.habitDatabase = habitDatabase;
+    }
+
+
+
+    public interface OnItemCheckedChangeListener {
+        void onItemCheckedChange(Habit habit);
+    }
 
 
     // Setting onClick listeners, CheckBoxes, and TextViews
@@ -41,6 +55,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
         Habit currentHabit = habits.get(position);
         holder.habitNameTextView.setText(currentHabit.getHabitName());
+        holder.completedCheckBox.setChecked(currentHabit.isCompleted());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,31 +75,45 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                 return true;
             }
         });
-        //Setting date for habit completion
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        // holder.completedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        //     @Override
-        //     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        //         currentHabit.setIsCompleted(isChecked);
-        //         currentHabit.setLastCompletedDate(currentDate);
-        //         Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
-        //         if (onItemCheckedChangeListener != null) {
-        //             onItemCheckedChangeListener.onItemCheckedChange(currentHabit);
-        //         }
-        //     }
-        // });
 
-//        holder.completedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                currentHabit.setIsCompleted(isChecked);
-//                currentHabit.setLastCompletedDate(currentDate);
-//                Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
-//                if (onItemCheckedChangeListener != null) {
-//                    onItemCheckedChangeListener.onItemCheckedChange(currentHabit);
-//                }
-//            }
-//        });
+        // thread to check time to see if habit is completed
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(60000); // Sleep for 1 minute
+        
+                    mainHandler.post(() -> {
+                        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                        if (!currentHabit.getLastCompletedDate().equals(currentDate)) {
+                            currentHabit.setIsCompleted(false);
+                            // Update the checkbox in the UI
+                            holder.completedCheckBox.setChecked(false);
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        //Setting date for habit completion
+        holder.completedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    currentHabit.setIsCompleted(true);
+                    String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                    currentHabit.setLastCompletedDate(currentDate);
+                    Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
+                } else {
+                    currentHabit.setIsCompleted(false);
+                }
+                // Update the habit in the database
+                new Thread(() -> {
+                    habitDatabase.habitDAO().update(currentHabit);
+                }).start();
+            }
+        });
     }
 
     @Override

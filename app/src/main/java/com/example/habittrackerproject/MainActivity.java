@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,9 +33,12 @@ public class MainActivity extends AppCompatActivity {
         habitRecyclerView = findViewById(R.id.habitRecyclerView);
         addHabitButton  = findViewById(R.id.addHabitButton);
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
+        
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        HabitListAdapter adapter = new HabitListAdapter(mainHandler, habitDatabase);
 
 
-        habitListAdapter = new HabitListAdapter();
+        habitListAdapter = new HabitListAdapter(mainHandler, habitDatabase);
         habitRecyclerView.setAdapter(habitListAdapter);
         habitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         viewHabit.getAllHabits().observe(this, new Observer<List<Habit>>() {
