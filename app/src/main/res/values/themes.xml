@@ -16,9 +16,9 @@
         <!-- colour when item clicked -->
         <item name="colorControlHighlight">@color/colorSecondary</item>
         <!-- status bar -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">#1B2626</item>
         <!-- nav bar -->
-        <item name="android:navigationBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">#1B2626</item>
 
     </style>
 

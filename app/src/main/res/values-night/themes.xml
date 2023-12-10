@@ -3,17 +3,21 @@
     <style name="Base.Theme.HabitTrackerProject" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-        <!-- Primary brand color. -->
+
+
+        <!-- primary -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@android:color/white</item>
-        <!-- Secondary brand color. -->
+        <!-- secondary -->
         <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorSecondaryVariant">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryDark</item>
         <item name="colorOnSecondary">@android:color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Navigation bar color. -->
-        <item name="android:navigationBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- when clicked -->
+        <item name="colorControlHighlight">@color/colorSecondary</item>
+        <!-- status bar -->
+        <item name="android:statusBarColor">#1B2626</item>
+        <!-- nav bar -->
+        <item name="android:navigationBarColor">#1B2626</item>
     </style>
 </resources>

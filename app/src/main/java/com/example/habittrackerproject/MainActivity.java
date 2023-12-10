@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +26,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private ViewHabit viewHabit;
-    private Button addHabitButton;
+    private FloatingActionButton addHabitButton;
     private HabitDatabase habitDatabase;
     private HabitListAdapter habitListAdapter;
     private RecyclerView habitRecyclerView;

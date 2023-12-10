@@ -6,11 +6,6 @@
         android:title="Today" />
 
     <item
-        android:id="@+id/navigation_add_habit"
-        android:icon="@drawable/ic_add_habit"
-        android:title="Add" />
-
-    <item
         android:id="@+id/navigation_calendar"
         android:icon="@drawable/ic_calendar"
         android:title="Calendar" />
