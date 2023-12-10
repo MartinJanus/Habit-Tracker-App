@@ -23,6 +23,9 @@ public class Habit {
 
     private String location;
 
+    private Double latitude;
+    private Double longitude;
+
 
     //Constructor Class
 
@@ -72,4 +75,24 @@ public class Habit {
     public void setLocation(String location) { this.location = location; }
 
     public String getLocation() { return location; }
+
+    public double getLatitude() { 
+        if (latitude != null) {
+            return latitude.doubleValue();
+        } else {
+            return Double.NaN;
+        }
+    }
+
+    public void setLatitude(double latitude) { this.latitude = latitude; }
+
+    public double getLongitude() { 
+        if (longitude != null) {
+            return latitude.doubleValue();
+        } else {
+            return Double.NaN;
+        }
+     }
+
+    public void setLongitude(double longitude) { this.longitude = longitude; }
 }

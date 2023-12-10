@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private HabitDatabase habitDatabase;
     private HabitListAdapter habitListAdapter;
     private RecyclerView habitRecyclerView;
+    private TextView toolbarInfo;
+    private BottomNavigationView bottomNavigationView;
+
 
 
     @Override
@@ -47,8 +51,20 @@ public class MainActivity extends AppCompatActivity {
 //        int completedHabits = getCompletedHabits();
 //        int totalHabits = getTotalHabits();
 
-        TextView toolbarInfo = findViewById(R.id.toolbar_info);
+        //Top Bar
+        toolbarInfo = findViewById(R.id.toolbar_info);
         toolbarInfo.setText(currentDate + "  "); //+ completedHabits + "/" + totalHabits + " Habits Completed");
+
+        //Bottom Nav Bar
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.navigation_location) {
+                Intent intent = new Intent(MainActivity.this, LocationViewActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            return false;
+        });
 
 
         habitDatabase = HabitDatabase.getInstance(this);
@@ -88,14 +104,6 @@ public class MainActivity extends AppCompatActivity {
                 viewHabit.delete(habit);
             }
         });
-
-//        //Checkbox for Completed Habits
-//        habitListAdapter.setOnItemCheckedChangeListener(new HabitListAdapter.OnItemCheckedChangeListener() {
-//            @Override
-//            public void onItemCheckedChange(Habit habit) {
-//                new Thread(() -> habitDatabase.habitDAO().update(habit)).start();
-//            }
-//        });
 
         // Adding Habits
         addHabitButton.setOnClickListener(new View.OnClickListener(){

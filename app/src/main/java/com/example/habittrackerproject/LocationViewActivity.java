@@ -1,0 +1,57 @@
+package com.example.habittrackerproject;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.os.Bundle;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import java.util.List;
+
+public class LocationViewActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private GoogleMap mMap;
+    private ViewHabit viewHabit;
+    private LiveData<List<Habit>> completedHabits; // Replace this with your actual list of completed habits
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_location);
+        viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.habitMap);
+        mapFragment.getMapAsync(this);
+
+        // Get the list of completed habits
+        completedHabits = viewHabit.getCompletedHabits(); 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // For each habit, add a marker to the map
+        completedHabits.observe(this, new Observer<List<Habit>>() {
+            @Override
+            public void onChanged(List<Habit> habits) {
+                for (Habit habit : habits) {
+                    double latitude = habit.getLatitude();
+                    double longitude = habit.getLongitude();
+                    if (!Double.isNaN(latitude) && !Double.isNaN(longitude)) {
+                        LatLng location = new LatLng(latitude, longitude);
+                        mMap.addMarker(new MarkerOptions().position(location).title(habit.getHabitName()));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+                    }
+                }
+            }
+        });
+    }
+}

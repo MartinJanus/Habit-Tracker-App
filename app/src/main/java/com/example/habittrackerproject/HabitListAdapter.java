@@ -34,7 +34,6 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     private OnItemLongClickListener onItemLongClickListener;
     private CheckBox completedCheckBox;
     private HabitDatabase habitDatabase;
-    private OnItemCheckedChangeListener onItemCheckedChangeListener;
 
     private Handler mainHandler;
     private LocationManager locationManager;
@@ -68,6 +67,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     @Override
     public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
         Habit currentHabit = habits.get(position);
+        holder.completedCheckBox.setOnCheckedChangeListener(null);
         holder.habitNameTextView.setText(currentHabit.getHabitName());
         holder.completedCheckBox.setChecked(currentHabit.isCompleted());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -89,13 +89,12 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                 return true;
             }
         });
-
         // thread to check time to see if habit is completed
         new Thread(() -> {
             while (true) {
                 try {
                     Thread.sleep(60000); // Sleep for 1 minute
-        
+
                     mainHandler.post(() -> {
                         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                         if (!currentHabit.getLastCompletedDate().equals(currentDate)) {
@@ -121,9 +120,12 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                     Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
 
                     try {
-
                         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         if (location != null) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            currentHabit.setLatitude(latitude);
+                            currentHabit.setLongitude(longitude);
                             Log.d("HabitTracker", "Habit completed at location: " + location.toString());
                         }
                     } catch (SecurityException e) {

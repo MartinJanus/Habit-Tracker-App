@@ -41,4 +41,8 @@ public interface HabitDAO {
     // Query for ID
     @Query("SELECT * FROM habit_table WHERE id = :habitId")
     LiveData<Habit> getHabitById(int habitId);
+
+    // Query for completed habits
+    @Query("SELECT * FROM habit_table WHERE isCompleted = 1")
+    LiveData<List<Habit>> getCompletedHabits();
 }
