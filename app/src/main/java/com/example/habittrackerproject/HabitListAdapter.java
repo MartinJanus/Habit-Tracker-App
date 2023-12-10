@@ -1,5 +1,11 @@
 package com.example.habittrackerproject;
 
+import android.app.Activity;
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +17,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +37,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     private OnItemCheckedChangeListener onItemCheckedChangeListener;
 
     private Handler mainHandler;
+    private LocationManager locationManager;
 
 
 
@@ -38,9 +47,14 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.habit_list_item, parent, false);
         return new HabitViewHolder(itemView);
     }
-    public HabitListAdapter(Handler mainHandler, HabitDatabase habitDatabase) {
+    public HabitListAdapter(Context context, Handler mainHandler, HabitDatabase habitDatabase) {
         this.mainHandler = mainHandler;
         this.habitDatabase = habitDatabase;
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
     }
 
 
@@ -105,10 +119,19 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                     String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                     currentHabit.setLastCompletedDate(currentDate);
                     Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
+
+                    try {
+
+                        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        if (location != null) {
+                            Log.d("HabitTracker", "Habit completed at location: " + location.toString());
+                        }
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     currentHabit.setIsCompleted(false);
                 }
-                // Update the habit in the database
                 new Thread(() -> {
                     habitDatabase.habitDAO().update(currentHabit);
                 }).start();
@@ -133,14 +156,6 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     public interface OnItemLongClickListener {
         void onItemLongClick(Habit habit);
     }
-//
-//    interface OnItemCheckedChangeListener {
-//        void onItemCheckedChange(Habit habit);
-//    }
-//
-//    public void setOnItemCheckedChangeListener(OnItemCheckedChangeListener listener) {
-//        this.onItemCheckedChangeListener = listener;
-//    }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;

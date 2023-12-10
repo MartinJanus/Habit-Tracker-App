@@ -35,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
         
         Handler mainHandler = new Handler(Looper.getMainLooper());
-        HabitListAdapter adapter = new HabitListAdapter(mainHandler, habitDatabase);
+        HabitListAdapter adapter = new HabitListAdapter(this, mainHandler, habitDatabase);
 
 
-        habitListAdapter = new HabitListAdapter(mainHandler, habitDatabase);
+        habitListAdapter = new HabitListAdapter(this, mainHandler, habitDatabase);
         habitRecyclerView.setAdapter(habitListAdapter);
         habitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         viewHabit.getAllHabits().observe(this, new Observer<List<Habit>>() {

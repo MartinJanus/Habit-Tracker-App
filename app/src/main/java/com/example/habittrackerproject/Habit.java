@@ -21,6 +21,8 @@ public class Habit {
     private boolean isCompleted;
     private String lastCompletedDate;
 
+    private String location;
+
 
     //Constructor Class
 
@@ -30,6 +32,7 @@ public class Habit {
         this.isCompleted = false;
         this.lastCompletedDate = ""; 
         this.startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        this.location = "";
     }
 
     //Getters and Setters
@@ -66,4 +69,7 @@ public class Habit {
         this.isCompleted = isCompleted;
     }
 
+    public void setLocation(String location) { this.location = location; }
+
+    public String getLocation() { return location; }
 }
