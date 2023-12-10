@@ -25,6 +25,7 @@ public class HabitDetailActivity extends AppCompatActivity {
 
         viewHabit = new ViewModelProvider(this).get(ViewHabit.class);
 
+        editHabitButton = findViewById(R.id.editHabitButton);
         editHabitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

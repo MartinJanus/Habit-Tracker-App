@@ -18,7 +18,7 @@ import java.util.List;
 public class LocationViewActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private ViewHabit viewHabit;
-    private LiveData<List<Habit>> completedHabits; // Replace this with your actual list of completed habits
+    private LiveData<List<Habit>> completedHabits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +26,9 @@ public class LocationViewActivity extends AppCompatActivity implements OnMapRead
         setContentView(R.layout.activity_location);
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.habitMap);
         mapFragment.getMapAsync(this);
 
-        // Get the list of completed habits
         completedHabits = viewHabit.getCompletedHabits(); 
     }
 

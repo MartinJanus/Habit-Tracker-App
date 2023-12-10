@@ -83,7 +83,6 @@ public class HabitCreationActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(HabitCreationActivity.this, "Habit Created: " + habit.getHabitName(), Toast.LENGTH_SHORT).show();
-                        // Optionally, navigate to another activity or update UI
                     }
                 });
             }
