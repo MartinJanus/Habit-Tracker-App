@@ -3,7 +3,26 @@
     <style name="Base.Theme.HabitTrackerProject" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+
+        <!-- primary colour -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <!-- secondary colour -->
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryDark</item>
+        <item name="colorOnSecondary">@android:color/black</item>
+        <!-- colour when item clicked -->
+        <item name="colorControlHighlight">@color/colorSecondary</item>
+        <!-- status bar -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- nav bar -->
+        <item name="android:navigationBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
     </style>
+
+
 
     <style name="Theme.HabitTrackerProject" parent="Base.Theme.HabitTrackerProject" />
 </resources>

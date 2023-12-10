@@ -1,6 +1,7 @@
 package com.example.habittrackerproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,8 +14,12 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,10 +29,25 @@ public class MainActivity extends AppCompatActivity {
     private HabitListAdapter habitListAdapter;
     private RecyclerView habitRecyclerView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Top Bar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //Todays Date
+        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+//        int completedHabits = getCompletedHabits();
+//        int totalHabits = getTotalHabits();
+
+        TextView toolbarInfo = findViewById(R.id.toolbar_info);
+        toolbarInfo.setText(currentDate + "  "); //+ completedHabits + "/" + totalHabits + " Habits Completed");
+
 
         habitDatabase = HabitDatabase.getInstance(this);
         habitRecyclerView = findViewById(R.id.habitRecyclerView);
