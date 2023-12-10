@@ -48,7 +48,7 @@ public class HabitCreationActivity extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 Calendar selectedDate = Calendar.getInstance();
                                 selectedDate.set(year, month, dayOfMonth);
-                                editTextStartDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selectedDate.getTime()));
+                                editTextStartDate.setText(new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(selectedDate.getTime()));
                             }
                         }, year, month, day);
                 datePickerDialog.show();

@@ -97,7 +97,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                     Thread.sleep(60000); // Sleep for 1 minute
         
                     mainHandler.post(() -> {
-                        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                         if (!currentHabit.getLastCompletedDate().equals(currentDate)) {
                             currentHabit.setIsCompleted(false);
                             // Update the checkbox in the UI
@@ -116,7 +116,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     currentHabit.setIsCompleted(true);
-                    String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                    String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                     currentHabit.setLastCompletedDate(currentDate);
                     Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
 
