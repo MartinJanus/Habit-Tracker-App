@@ -63,10 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);
                 return true;
-            } else if (item.getItemId() == R.id.navigation_calendar) {
-                Intent intent = new Intent(MainActivity.this, CalendarViewActivity.class);
-                startActivity(intent);
-                return true;
             }
             return true;
         });

@@ -13,10 +13,10 @@ public class HabitManager {
     private ViewHabit viewHabit;
     private Handler mainHandler = new Handler(Looper.getMainLooper());
 
-
     public HabitManager(ViewHabit viewHabit) {
         this.viewHabit = viewHabit;
     }
+
     public void checkIfHabitIsCompleted(Habit currentHabit, HabitListAdapter.HabitViewHolder holder) {
         new Thread(() -> {
             try {
@@ -40,7 +40,6 @@ public class HabitManager {
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         currentHabit.setLastCompletedDate(currentDate);
         Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + true);
-
         try {
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (location != null) {
