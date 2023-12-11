@@ -1,5 +1,6 @@
 package com.example.habittrackerproject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -94,7 +96,17 @@ public class MainActivity extends AppCompatActivity {
         habitListAdapter.setOnItemLongClickListener(new HabitListAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(Habit habit) {
-                viewHabit.delete(habit);
+                new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Delete Habit")
+                .setMessage("Are you sure you want to delete your Habit?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        viewHabit.delete(habit);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
             }
         });
 
