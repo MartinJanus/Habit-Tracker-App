@@ -10,12 +10,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 public class HabitManager {
+    private ViewHabit viewHabit;
     private Handler mainHandler = new Handler(Looper.getMainLooper());
 
+
+    public HabitManager(ViewHabit viewHabit) {
+        this.viewHabit = viewHabit;
+    }
     public void checkIfHabitIsCompleted(Habit currentHabit, HabitListAdapter.HabitViewHolder holder) {
         new Thread(() -> {
             try {
-                Thread.sleep(60000); // Sleep for 1 minute
+                Thread.sleep(60000); // 1 minute
 
                 mainHandler.post(() -> {
                     String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
@@ -44,6 +49,7 @@ public class HabitManager {
                 currentHabit.setLatitude(latitude);
                 currentHabit.setLongitude(longitude);
                 Log.d("HabitTracker", "Habit completed at location: " + location.toString());
+                viewHabit.update(currentHabit);
             }
         } catch (SecurityException e) {
             e.printStackTrace();

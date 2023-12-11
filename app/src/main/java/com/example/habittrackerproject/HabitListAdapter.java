@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
-import android.os.Handler;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,21 +17,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.HabitViewHolder> {
 
+    private HabitManager habitManager;
     private List<Habit> habits = new ArrayList<>();
     private OnItemClickListener listener;
     private OnItemLongClickListener onItemLongClickListener;
-    private ViewHabit viewHabit;
-    private Handler mainHandler;
     private LocationManager locationManager;
-    private HabitManager habitManager;
 
 
     @NonNull
@@ -44,17 +35,14 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.habit_list_item, parent, false);
         return new HabitViewHolder(itemView);
     }
-    public HabitListAdapter(Context context, Handler mainHandler, ViewHabit viewHabit) {
-        this.mainHandler = mainHandler;
-        this.viewHabit = viewHabit;
+    public HabitListAdapter(Context context, HabitManager habitManager) {
+        this.habitManager = habitManager;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        habitManager = new HabitManager();
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
-
 
     // Setting onClick listeners, CheckBoxes, and TextViews
     @Override

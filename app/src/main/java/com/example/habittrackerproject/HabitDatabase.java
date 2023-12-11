@@ -37,13 +37,10 @@ public abstract class HabitDatabase extends RoomDatabase {
         }
     };
 
-
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-
         PopulateDbAsyncTask(HabitDatabase instance) {
             HabitDAO habitDAO = instance.habitDAO();
         }
-
         @Override
         protected Void doInBackground(Void... voids) {
 

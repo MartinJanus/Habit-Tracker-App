@@ -90,7 +90,7 @@ public class Habit {
     }
     public double getLongitude() { 
         if (longitude != null) {
-            return latitude.doubleValue();
+            return longitude.doubleValue();
         } else {
             return Double.NaN;
         }

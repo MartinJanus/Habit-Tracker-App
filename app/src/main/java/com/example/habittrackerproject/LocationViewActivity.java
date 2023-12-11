@@ -7,6 +7,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
+
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +37,7 @@ public class LocationViewActivity extends AppCompatActivity implements OnMapRead
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        float zLevel = 12.0f;
 
         // For each habit, add a marker to the map
         completedHabits.observe(this, new Observer<List<Habit>>() {
@@ -46,7 +49,7 @@ public class LocationViewActivity extends AppCompatActivity implements OnMapRead
                     if (!Double.isNaN(latitude) && !Double.isNaN(longitude)) {
                         LatLng location = new LatLng(latitude, longitude);
                         mMap.addMarker(new MarkerOptions().position(location).title(habit.getHabitName()));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zLevel));
                     }
                 }
             }

@@ -2,7 +2,6 @@ package com.example.habittrackerproject;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private String currentDate;
     private String currentDay;
+    private HabitManager habitManager;
+
 
 
     @Override
@@ -76,9 +75,8 @@ public class MainActivity extends AppCompatActivity {
         habitRecyclerView = findViewById(R.id.habitRecyclerView);
         addHabitButton  = findViewById(R.id.addHabitButton);
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
-        Handler mainHandler = new Handler(Looper.getMainLooper());
-
-        habitListAdapter = new HabitListAdapter(this, mainHandler, viewHabit);
+        habitManager = new HabitManager(viewHabit);
+        habitListAdapter = new HabitListAdapter(this, habitManager);
         habitRecyclerView.setAdapter(habitListAdapter);
         habitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         viewHabit.getAllHabits().observe(this, new Observer<List<Habit>>() {
