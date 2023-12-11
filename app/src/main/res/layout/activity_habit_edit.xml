@@ -34,7 +34,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
-        android:id="@+id/editTextStartDate"
+        android:id="@+id/StartDateEdit"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:hint="Edit Start Date"
@@ -49,12 +49,11 @@
         android:id="@+id/buttonSaveChanges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="92dp"
         android:text="Save Changes"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HabitDescEdit"
-        app:layout_constraintVertical_bias="0.852" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
