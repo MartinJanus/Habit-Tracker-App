@@ -19,6 +19,7 @@ public class HabitDetailActivity extends AppCompatActivity {
     private TextView habitNameTextView;
     private TextView habitDescriptionTextView;
     private TextView habitStartDate;
+    private TextView habitStreakTextView;
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -29,6 +30,8 @@ public class HabitDetailActivity extends AppCompatActivity {
         habitNameTextView = findViewById(R.id.habitNameTextView);
         habitDescriptionTextView = findViewById(R.id.habitDescriptionTextView);
         habitStartDate = findViewById(R.id.habitStartDateTextView);
+        habitStreakTextView = findViewById(R.id.habitStreakTextView);
+
         editHabitButton = findViewById(R.id.editHabitButton);
 
         viewHabit = new ViewModelProvider(this).get(ViewHabit.class);
@@ -45,6 +48,7 @@ public class HabitDetailActivity extends AppCompatActivity {
                             habitNameTextView.setText(habit.getHabitName());
                             habitDescriptionTextView.setText(habit.getHabitDescription());
                             habitStartDate.setText(habit.getStartDate());
+                            habitStreakTextView.setText(String.valueOf(habit.getStreak()));
                          }
                     }
                 });

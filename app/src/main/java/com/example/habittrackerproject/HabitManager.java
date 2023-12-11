@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 public class HabitManager {
@@ -37,6 +38,16 @@ public class HabitManager {
     }
     public void setHabitAsCompleted(Habit currentHabit, LocationManager locationManager) {
         currentHabit.setIsCompleted(true);
+
+        // Check if the habit was completed yesterday
+        if (isDateYesterday(currentHabit.getLastCompletedDate())) {
+            // If yes, increment the streak
+            currentHabit.setStreak(currentHabit.getStreak() + 1);
+        } else {
+            // If not, reset the streak to 1
+            currentHabit.setStreak(1);
+        }
+
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         currentHabit.setLastCompletedDate(currentDate);
         Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + true);
@@ -53,5 +64,12 @@ public class HabitManager {
         } catch (SecurityException e) {
             e.printStackTrace();
         }
+    }
+    private boolean isDateYesterday(String date) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        String yesterday = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(cal.getTime());
+    
+        return date.equals(yesterday);
     }
 }

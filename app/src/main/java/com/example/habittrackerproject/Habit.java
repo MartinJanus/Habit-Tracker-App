@@ -21,6 +21,8 @@ public class Habit {
     private Double latitude;
     private Double longitude;
 
+    private int streak;
+
     // Constructor
     public Habit(String habitName, String habitDescription){
         this.habitName = habitName;
@@ -29,6 +31,7 @@ public class Habit {
         this.lastCompletedDate = ""; 
         this.startDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         this.location = "";
+        this.streak = 0;
     }
 
     //Getters and Setters
@@ -97,5 +100,12 @@ public class Habit {
      }
     public void setLongitude(double longitude){
         this.longitude = longitude;
+    }
+
+    public int getStreak() {
+        return streak;
+    }
+    public void setStreak(int streak) {
+        this.streak = streak;
     }
 }
