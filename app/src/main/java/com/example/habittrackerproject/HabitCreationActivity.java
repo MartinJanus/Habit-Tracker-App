@@ -1,6 +1,7 @@
 package com.example.habittrackerproject;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,6 +26,7 @@ public class HabitCreationActivity extends AppCompatActivity {
     private ViewHabit viewHabit;
     private EditText editTextStartDate;
     private Button buttonCreateHabit;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,20 @@ public class HabitCreationActivity extends AppCompatActivity {
         buttonCreateHabit = findViewById(R.id.buttonCreateHabit);
 
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.navigation_location) {
+                Intent intent = new Intent(HabitCreationActivity.this, LocationViewActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.navigation_today) {
+                Intent intent = new Intent(HabitCreationActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            return true;
+        });
 
         //Start Date Selector
         editTextStartDate.setOnClickListener(new View.OnClickListener() {

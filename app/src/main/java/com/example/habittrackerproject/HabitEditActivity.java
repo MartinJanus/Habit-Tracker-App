@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -25,6 +27,7 @@ public class HabitEditActivity extends AppCompatActivity {
     private Button saveChangesButton;
     private Habit habit;
     private ViewHabit viewHabit;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,20 @@ public class HabitEditActivity extends AppCompatActivity {
         startDateEdit = findViewById(R.id.StartDateEdit);
         saveChangesButton = findViewById(R.id.buttonSaveChanges);
         viewHabit = new ViewModelProvider(this).get(ViewHabit.class);
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.navigation_location) {
+                Intent intent = new Intent(HabitEditActivity.this, LocationViewActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.navigation_today) {
+                Intent intent = new Intent(HabitEditActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            return true;
+        });
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("habitId")) {

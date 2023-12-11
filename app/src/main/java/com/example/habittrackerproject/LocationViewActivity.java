@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,7 +34,21 @@ public class LocationViewActivity extends AppCompatActivity implements OnMapRead
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.habitMap);
         mapFragment.getMapAsync(this);
 
-        completedHabits = viewHabit.getCompletedHabits(); 
+        completedHabits = viewHabit.getCompletedHabits();
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.navigation_location) {
+                Intent intent = new Intent(LocationViewActivity.this, LocationViewActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.navigation_today) {
+                Intent intent = new Intent(LocationViewActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            return true;
+        });
     }
 
     @Override

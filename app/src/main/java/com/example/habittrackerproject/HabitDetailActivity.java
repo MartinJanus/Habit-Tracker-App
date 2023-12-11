@@ -36,6 +36,20 @@ public class HabitDetailActivity extends AppCompatActivity {
 
         viewHabit = new ViewModelProvider(this).get(ViewHabit.class);
 
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.navigation_location) {
+                Intent intent = new Intent(HabitDetailActivity.this, LocationViewActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.navigation_today) {
+                Intent intent = new Intent(HabitDetailActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            return true;
+        });
+
         Intent intent = getIntent();
         //fix here
         int habitId = intent.getIntExtra("habitId", -1);
@@ -64,24 +78,5 @@ public class HabitDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-//        //Bottom Nav Bar
-//        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-//        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-//            if(item.getItemId() == R.id.navigation_location) {
-//                Intent intent = new Intent(MainActivity.this, LocationViewActivity.class);
-//                startActivity(intent);
-//                return true;
-//            } else if (item.getItemId() == R.id.navigation_today) {
-//                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                return true;
-//            } else if (item.getItemId() == R.id.navigation_calendar) {
-//                Intent intent = new Intent(MainActivity.this, CalendarViewActivity.class);
-//                startActivity(intent);
-//                return true;
-//            }
-//            return true;
-//        });
     }
 }

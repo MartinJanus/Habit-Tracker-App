@@ -132,6 +132,7 @@
         android:background="#1B2626"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
+        app:itemActiveIndicatorStyle="@color/colorSecondaryDark"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
