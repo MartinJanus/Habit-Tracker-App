@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class HabitDetailActivity extends AppCompatActivity {
 
     private ViewHabit viewHabit;
@@ -17,6 +19,7 @@ public class HabitDetailActivity extends AppCompatActivity {
     private TextView habitNameTextView;
     private TextView habitDescriptionTextView;
     private TextView habitLocation;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,5 +61,24 @@ public class HabitDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        //Bottom Nav Bar
+//        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+//        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+//            if(item.getItemId() == R.id.navigation_location) {
+//                Intent intent = new Intent(MainActivity.this, LocationViewActivity.class);
+//                startActivity(intent);
+//                return true;
+//            } else if (item.getItemId() == R.id.navigation_today) {
+//                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                return true;
+//            } else if (item.getItemId() == R.id.navigation_calendar) {
+//                Intent intent = new Intent(MainActivity.this, CalendarViewActivity.class);
+//                startActivity(intent);
+//                return true;
+//            }
+//            return true;
+//        });
     }
 }

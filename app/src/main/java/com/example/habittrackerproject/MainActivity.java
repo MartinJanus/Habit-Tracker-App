@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewHabit viewHabit;
     private FloatingActionButton addHabitButton;
-    private HabitDatabase habitDatabase;
     private HabitListAdapter habitListAdapter;
     private RecyclerView habitRecyclerView;
     private TextView toolbarInfo;
@@ -56,14 +55,22 @@ public class MainActivity extends AppCompatActivity {
         toolbarInfo.setText(currentDate + "  "); //+ completedHabits + "/" + totalHabits + " Habits Completed");
 
         //Bottom Nav Bar
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.navigation_location) {
+            if(item.getItemId() == R.id.navigation_location) {
                 Intent intent = new Intent(MainActivity.this, LocationViewActivity.class);
                 startActivity(intent);
                 return true;
+            } else if (item.getItemId() == R.id.navigation_today) {
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.navigation_calendar) {
+                Intent intent = new Intent(MainActivity.this, CalendarViewActivity.class);
+                startActivity(intent);
+                return true;
             }
-            return false;
+            return true;
         });
 
         // Recycler View
