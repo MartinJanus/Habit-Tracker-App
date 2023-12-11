@@ -14,8 +14,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,9 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private HabitListAdapter habitListAdapter;
     private RecyclerView habitRecyclerView;
     private TextView toolbarInfo;
+    private TextView toolbarTitle;
     private BottomNavigationView bottomNavigationView;
-    private Toolbar toolbar;
     private String currentDate;
+    private String currentDay;
 
 
     @Override
@@ -43,16 +42,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        //Todays Date
+        //Date and Day
         currentDate = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
-
-        //Top Bar
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        currentDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date());
 
         //Top Bar (Fix for habits completed)
         toolbarInfo = findViewById(R.id.toolbar_info);
         toolbarInfo.setText(currentDate + "  "); //+ completedHabits + "/" + totalHabits + " Habits Completed");
+
+        toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(currentDay);
 
         //Bottom Nav Bar
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);

@@ -9,37 +9,37 @@
 
     <EditText
         android:id="@+id/editTextHabitName"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
         android:hint="Enter Habit Name"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.243" />
 
     <EditText
         android:id="@+id/editTextDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:hint="Enter Habit Description"
         app:layout_constraintBottom_toTopOf="@+id/buttonCreateHabit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextHabitName"
-        app:layout_constraintVertical_bias="0.115" />
-
+        app:layout_constraintVertical_bias="0.065" />
 
     <EditText
         android:id="@+id/editTextStartDate"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:hint="Enter Habit Start Date"
         app:layout_constraintBottom_toTopOf="@+id/buttonCreateHabit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextHabitName"
-        app:layout_constraintVertical_bias="0.31" />
+        app:layout_constraintVertical_bias="0.257" />
 
     <Button
         android:id="@+id/buttonCreateHabit"
@@ -66,6 +66,33 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="#1B2626"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Create Habit"
+                android:textColor="@color/white"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

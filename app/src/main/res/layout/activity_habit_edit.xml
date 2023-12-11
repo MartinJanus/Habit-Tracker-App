@@ -6,34 +6,44 @@
     android:layout_height="match_parent">
 
 
-    <!--    <DatePicker-->
-<!--        android:id="@+id/edit_start_date"-->
-<!--        android:layout_width="306dp"-->
-<!--        android:layout_height="286dp"-->
-<!--        tools:layout_editor_absoluteX="52dp"-->
-<!--        tools:layout_editor_absoluteY="286dp" />-->
-
     <EditText
         android:id="@+id/HabitNameEdit"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="Edit Habit Name"
+        android:hint="Edit Name"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/HabitDescEdit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.791"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintVertical_bias="0.878" />
 
     <EditText
         android:id="@+id/HabitDescEdit"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="388dp"
-        android:hint="Edit Habit Description"
+        android:hint="Edit Description"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
+    <EditText
+        android:id="@+id/editTextStartDate"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="Edit Start Date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HabitDescEdit"
+        app:layout_constraintVertical_bias="0.066" />
 
     <Button
         android:id="@+id/buttonSaveChanges"
@@ -59,5 +69,33 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="#1B2626"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Edit Habit"
+                android:textColor="@color/white"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
