@@ -9,11 +9,8 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class ViewHabit extends AndroidViewModel {
-
     private HabitRepository habitRepository;
-
     private LiveData<List<Habit>> allHabits;
-
     public ViewHabit(@NonNull Application application) {
         super(application);
         habitRepository = new HabitRepository(application);

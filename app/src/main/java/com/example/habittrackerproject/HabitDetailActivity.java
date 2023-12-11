@@ -14,19 +14,22 @@ public class HabitDetailActivity extends AppCompatActivity {
 
     private ViewHabit viewHabit;
     private Button editHabitButton;
+    private TextView habitNameTextView;
+    private TextView habitDescriptionTextView;
+    private TextView habitLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_detail);
 
-//        private textview above (consistency)
-        TextView habitNameTextView = findViewById(R.id.habitNameTextView);
-        TextView habitDescriptionTextView = findViewById(R.id.habitDescriptionTextView);
-        TextView habitLocation = findViewById(R.id.habitLocationTextView);
+        habitNameTextView = findViewById(R.id.habitNameTextView);
+        habitDescriptionTextView = findViewById(R.id.habitDescriptionTextView);
+        habitLocation = findViewById(R.id.habitLocationTextView);
+        editHabitButton = findViewById(R.id.editHabitButton);
+
 
         viewHabit = new ViewModelProvider(this).get(ViewHabit.class);
-
-        editHabitButton = findViewById(R.id.editHabitButton);
 
         Intent intent = getIntent();
         //fix here
@@ -45,14 +48,14 @@ public class HabitDetailActivity extends AppCompatActivity {
                 });
             }
         }
+
+        //  Edit Habit Activity
         editHabitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // Intent to go to HabitCreation
                 Intent intent = new Intent(HabitDetailActivity.this, HabitEditActivity.class);
                 intent.putExtra("habitId", habitId);
                 startActivity(intent);
-
             }
         });
     }

@@ -17,7 +17,6 @@ public interface HabitDAO {
     @Insert
     void insert(Habit habit);
 
-
     //updating data
     @Update
     void update(Habit habit);
@@ -26,17 +25,13 @@ public interface HabitDAO {
     @Delete
     void delete(Habit habit);
 
-
     //deleting all habits
     @Query("DELETE FROM habit_table")
     void deleteAllHabits();
 
-
-
     // to read all habits in the database (probably to order by habit priority or name)
     @Query("SELECT * FROM habit_table")
     LiveData<List<Habit>> getAllHabits();
-
 
     // Query for ID
     @Query("SELECT * FROM habit_table WHERE id = :habitId")

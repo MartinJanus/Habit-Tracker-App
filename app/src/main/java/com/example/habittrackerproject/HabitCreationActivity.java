@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,8 +20,9 @@ public class HabitCreationActivity extends AppCompatActivity {
 
     private EditText editTextHabitName;
     private EditText editTextHabitDescription;
-    private HabitDatabase habitDatabase;
+    private ViewHabit viewHabit;
     private EditText editTextStartDate;
+    private Button buttonCreateHabit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +32,11 @@ public class HabitCreationActivity extends AppCompatActivity {
         editTextHabitName = findViewById(R.id.editTextHabitName);
         editTextHabitDescription = findViewById(R.id.editTextDescription);
         editTextStartDate = findViewById(R.id.editTextStartDate);
-        Button buttonCreateHabit = findViewById(R.id.buttonCreateHabit);
+        buttonCreateHabit = findViewById(R.id.buttonCreateHabit);
 
-        habitDatabase = HabitDatabase.getInstance(this);
+        viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
 
+        //Start Date Selector
         editTextStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +57,7 @@ public class HabitCreationActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+        // Habit Creation Button
         buttonCreateHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,25 +70,11 @@ public class HabitCreationActivity extends AppCompatActivity {
                     habit.setHabitName(habitName);
                     habit.setHabitDescription(habitDescription);
                     habit.setStartDate(startDate);
-                    insertHabit(habit);
+                    viewHabit.insert(habit);
+                    Toast.makeText(HabitCreationActivity.this, "Habit Created: " + habit.getHabitName(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(HabitCreationActivity.this, "Please enter a habit name", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-    }
-
-    private void insertHabit(Habit habit) {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                habitDatabase.habitDAO().insert(habit);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(HabitCreationActivity.this, "Habit Created: " + habit.getHabitName(), Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         });
     }

@@ -33,7 +33,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     private OnItemClickListener listener;
     private OnItemLongClickListener onItemLongClickListener;
     private CheckBox completedCheckBox;
-    private HabitDatabase habitDatabase;
+    private ViewHabit viewHabit;
 
     private Handler mainHandler;
     private LocationManager locationManager;
@@ -45,9 +45,9 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.habit_list_item, parent, false);
         return new HabitViewHolder(itemView);
     }
-    public HabitListAdapter(Context context, Handler mainHandler, HabitDatabase habitDatabase) {
+    public HabitListAdapter(Context context, Handler mainHandler, ViewHabit viewHabit) {
         this.mainHandler = mainHandler;
-        this.habitDatabase = habitDatabase;
+        this.viewHabit = viewHabit;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -128,7 +128,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                     currentHabit.setIsCompleted(false);
                 }
                 new Thread(() -> {
-                    habitDatabase.habitDAO().update(currentHabit);
+                    viewHabit.update(currentHabit);
                 }).start();
             }
         });

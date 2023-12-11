@@ -33,25 +33,23 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView habitRecyclerView;
     private TextView toolbarInfo;
     private BottomNavigationView bottomNavigationView;
-
+    private Toolbar toolbar;
+    private String currentDate;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        //Todays Date
+        currentDate = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
 
         //Top Bar
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Todays Date
-        String currentDate = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
-
-//        int completedHabits = getCompletedHabits();
-//        int totalHabits = getTotalHabits();
-
-        //Top Bar
+        //Top Bar (Fix for habits completed)
         toolbarInfo = findViewById(R.id.toolbar_info);
         toolbarInfo.setText(currentDate + "  "); //+ completedHabits + "/" + totalHabits + " Habits Completed");
 
@@ -66,16 +64,13 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-
-        habitDatabase = HabitDatabase.getInstance(this);
+        // Recycler View
         habitRecyclerView = findViewById(R.id.habitRecyclerView);
         addHabitButton  = findViewById(R.id.addHabitButton);
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
-        
         Handler mainHandler = new Handler(Looper.getMainLooper());
-//        HabitListAdapter adapter = new HabitListAdapter(this, mainHandler, habitDatabase);
 
-        habitListAdapter = new HabitListAdapter(this, mainHandler, habitDatabase);
+        habitListAdapter = new HabitListAdapter(this, mainHandler, viewHabit);
         habitRecyclerView.setAdapter(habitListAdapter);
         habitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         viewHabit.getAllHabits().observe(this, new Observer<List<Habit>>() {
@@ -86,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Detailed View, Clicking on the Item.
-
         habitListAdapter.setOnItemClickListener(new HabitListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Habit habit) {
@@ -108,10 +102,8 @@ public class MainActivity extends AppCompatActivity {
         addHabitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // Intent to go to HabitCreation
                 Intent intent = new Intent(MainActivity.this, HabitCreationActivity.class);
                 startActivity(intent);
-
             }
         });
     }
