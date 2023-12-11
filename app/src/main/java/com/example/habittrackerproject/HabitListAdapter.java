@@ -32,11 +32,10 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     private List<Habit> habits = new ArrayList<>();
     private OnItemClickListener listener;
     private OnItemLongClickListener onItemLongClickListener;
-    private CheckBox completedCheckBox;
     private ViewHabit viewHabit;
-
     private Handler mainHandler;
     private LocationManager locationManager;
+    private HabitManager habitManager;
 
 
     @NonNull
@@ -49,6 +48,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
         this.mainHandler = mainHandler;
         this.viewHabit = viewHabit;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        habitManager = new HabitManager();
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -63,6 +63,14 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
         holder.completedCheckBox.setOnCheckedChangeListener(null);
         holder.habitNameTextView.setText(currentHabit.getHabitName());
         holder.completedCheckBox.setChecked(currentHabit.isCompleted());
+
+        habitManager.checkIfHabitIsCompleted(currentHabit, holder);
+
+        holder.completedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                habitManager.setHabitAsCompleted(currentHabit, locationManager);
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,56 +88,6 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                     onItemLongClickListener.onItemLongClick(habits.get(adapterPosition));
                 }
                 return true;
-            }
-        });
-        // thread to check time to see if habit is completed
-        new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(60000); // Sleep for 1 minute
-
-                    mainHandler.post(() -> {
-                        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                        if (!currentHabit.getLastCompletedDate().equals(currentDate)) {
-                            currentHabit.setIsCompleted(false);
-                            // Update the checkbox in the UI
-                            holder.completedCheckBox.setChecked(false);
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-        //Setting date for habit completion
-        holder.completedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    currentHabit.setIsCompleted(true);
-                    String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                    currentHabit.setLastCompletedDate(currentDate);
-                    Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + isChecked);
-
-                    try {
-                        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        if (location != null) {
-                            double latitude = location.getLatitude();
-                            double longitude = location.getLongitude();
-                            currentHabit.setLatitude(latitude);
-                            currentHabit.setLongitude(longitude);
-                            Log.d("HabitTracker", "Habit completed at location: " + location.toString());
-                        }
-                    } catch (SecurityException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    currentHabit.setIsCompleted(false);
-                }
-                new Thread(() -> {
-                    viewHabit.update(currentHabit);
-                }).start();
             }
         });
     }
@@ -169,6 +127,9 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
             super(itemView);
             habitNameTextView = itemView.findViewById(R.id.habitNameTextView);
             completedCheckBox = itemView.findViewById(R.id.completionCheckbox);
+        }
+        public CheckBox getCompletedCheckBox() {
+            return completedCheckBox;
         }
     }
 }
