@@ -19,6 +19,7 @@ public class HabitDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_detail);
 
+//        private textview above (consistency)
         TextView habitNameTextView = findViewById(R.id.habitNameTextView);
         TextView habitDescriptionTextView = findViewById(R.id.habitDescriptionTextView);
         TextView habitLocation = findViewById(R.id.habitLocationTextView);
@@ -26,31 +27,33 @@ public class HabitDetailActivity extends AppCompatActivity {
         viewHabit = new ViewModelProvider(this).get(ViewHabit.class);
 
         editHabitButton = findViewById(R.id.editHabitButton);
-        editHabitButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                // Intent to go to HabitCreation
-                Intent intent = new Intent(HabitDetailActivity.this, HabitEditActivity.class);
-                startActivity(intent);
-
-            }
-        });
 
         Intent intent = getIntent();
+        //fix here
+        int habitId = intent.getIntExtra("habitId", -1);
         if (intent != null && intent.hasExtra("habitId")) {
-            int habitId = intent.getIntExtra("habitId", -1);
             if (habitId != -1) {
                 viewHabit.getHabitById(habitId).observe(this, new Observer<Habit>() {
                     @Override
                     public void onChanged(Habit habit) {
                         if (habit != null) {
                             habitNameTextView.setText(habit.getHabitName());
-                            habitDescriptionTextView.setText(habit.getHabitDescription());  //(getHabitDescription) same as habit name for now
+                            habitDescriptionTextView.setText(habit.getHabitDescription());
                             habitLocation.setText(habit.getLocation());
                          }
                     }
                 });
             }
         }
+        editHabitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // Intent to go to HabitCreation
+                Intent intent = new Intent(HabitDetailActivity.this, HabitEditActivity.class);
+                intent.putExtra("habitId", habitId);
+                startActivity(intent);
+
+            }
+        });
     }
 }

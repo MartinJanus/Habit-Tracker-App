@@ -39,7 +39,6 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     private LocationManager locationManager;
 
 
-
     @NonNull
     @Override
     public HabitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,12 +53,6 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
-    }
-
-
-
-    public interface OnItemCheckedChangeListener {
-        void onItemCheckedChange(Habit habit);
     }
 
 

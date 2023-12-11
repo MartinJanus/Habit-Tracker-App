@@ -73,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
         
         Handler mainHandler = new Handler(Looper.getMainLooper());
-        HabitListAdapter adapter = new HabitListAdapter(this, mainHandler, habitDatabase);
-
+//        HabitListAdapter adapter = new HabitListAdapter(this, mainHandler, habitDatabase);
 
         habitListAdapter = new HabitListAdapter(this, mainHandler, habitDatabase);
         habitRecyclerView.setAdapter(habitListAdapter);
