@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        // Get current date and day with approrpiate format 
+        // Get current date and day with approrpiate format
+        //Reference: https://www.javatpoint.com/java-date-to-string
         String currentDate = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
         String currentDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date());
 
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* Deleting Habits - Long Clicking on a habit item 
          * Dialog box to confirm deletion
+         * Reference: https://www.geeksforgeeks.org/how-to-create-an-alert-dialog-box-in-android/
         */
         habitListAdapter.setOnItemLongClickListener(new HabitListAdapter.OnItemLongClickListener() {
             @Override

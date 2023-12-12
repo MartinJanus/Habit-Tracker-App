@@ -73,6 +73,7 @@ public class HabitEditActivity extends AppCompatActivity {
         }
 
         // start date selector - to update the start date
+        // Reference: https://www.geeksforgeeks.org/datepickerdialog-in-android/
         startDateEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
