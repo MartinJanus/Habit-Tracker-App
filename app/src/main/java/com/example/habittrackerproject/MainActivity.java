@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         toolbarInfo.setText(currentDate);
 
         toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(currentDay);
+        toolbarTitle.setText(currentDay + " ");
 
         /* Bottom Navigation Bar 
          * Location icon takes you to location view 
