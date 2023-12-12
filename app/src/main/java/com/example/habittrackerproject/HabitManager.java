@@ -36,9 +36,19 @@ public class HabitManager {
             }
         }).start();
     }
+
+    public void setHabitAsNotCompleted(Habit currentHabit) {
+        // Reset the streak to 0
+        currentHabit.setStreak(0);
+        // Update the completed field
+        currentHabit.setIsCompleted(false);
+        // Log the action
+        Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + false);
+        // Update the habit in the database
+        viewHabit.update(currentHabit);
+    }
     public void setHabitAsCompleted(Habit currentHabit, LocationManager locationManager) {
         currentHabit.setIsCompleted(true);
-
         // Check if the habit was completed yesterday
         if (isDateYesterday(currentHabit.getLastCompletedDate())) {
             // If yes, increment the streak

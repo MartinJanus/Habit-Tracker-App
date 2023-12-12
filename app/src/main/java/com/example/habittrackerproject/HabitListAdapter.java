@@ -52,11 +52,18 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
         holder.habitNameTextView.setText(currentHabit.getHabitName());
         holder.completedCheckBox.setChecked(currentHabit.isCompleted());
 
+        holder.completedCheckBox.setOnCheckedChangeListener(null);
+        holder.completedCheckBox.setChecked(currentHabit.isCompleted());
+
         habitManager.checkIfHabitIsCompleted(currentHabit, holder);
 
+
         holder.completedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            currentHabit.setIsCompleted(isChecked);
             if (isChecked) {
                 habitManager.setHabitAsCompleted(currentHabit, locationManager);
+            } else {
+                habitManager.setHabitAsNotCompleted(currentHabit);
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
