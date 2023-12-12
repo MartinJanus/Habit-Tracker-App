@@ -12,18 +12,17 @@ import java.util.Locale;
 public class Habit {
     @PrimaryKey(autoGenerate = true)
     private int id;
+    private int streak;
+    private boolean isCompleted;
     private String habitName;
     private String habitDescription;
     private String startDate;
-    private boolean isCompleted;
     private String lastCompletedDate;
     private String location;
     private Double latitude;
     private Double longitude;
 
-    private int streak;
-
-    // Constructor
+    // Constructor for Habit
     public Habit(String habitName, String habitDescription){
         this.habitName = habitName;
         this.habitDescription = habitDescription;
@@ -34,7 +33,7 @@ public class Habit {
         this.streak = 0;
     }
 
-    //Getters and Setters
+    // Getters and Setters
     public String getHabitName(){
         return habitName;
     }
@@ -60,52 +59,54 @@ public class Habit {
         this.startDate = startDate;
     }
     @Override
-    public String toString() {
+    public String toString(){
         return habitName;
     }
-    public int getId() {
+    public int getId(){
         return id;
     }
-    public void setId(int id) {
+    public void setId(int id){
         this.id = id;
     }
-    public boolean isCompleted() {
+    public boolean isCompleted(){
         return isCompleted;
     }
-    public void setIsCompleted(boolean isCompleted) {
+    public void setIsCompleted(boolean isCompleted){
         this.isCompleted = isCompleted;
     }
+    public int getStreak(){
+        return streak;
+    }
+    public void setStreak(int streak){
+        this.streak = streak;
+    }
+    /* Location (Lat and Long) 
+     * getLatitude and getLongitude return NaN if the value is null
+    */
     public void setLocation(String location){
         this.location = location;
     }
     public String getLocation(){
         return location;
     }
-    public double getLatitude() { 
-        if (latitude != null) {
+    public double getLatitude(){ 
+        if (latitude != null){
             return latitude.doubleValue();
         } else {
             return Double.NaN;
         }
     }
-    public void setLatitude(double latitude){
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
-    public double getLongitude() { 
-        if (longitude != null) {
+    public double getLongitude(){ 
+        if (longitude != null){
             return longitude.doubleValue();
         } else {
             return Double.NaN;
         }
-     }
+    }
     public void setLongitude(double longitude){
         this.longitude = longitude;
-    }
-
-    public int getStreak() {
-        return streak;
-    }
-    public void setStreak(int streak) {
-        this.streak = streak;
     }
 }

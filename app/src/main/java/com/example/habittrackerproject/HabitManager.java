@@ -10,19 +10,22 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+/* Purpose to seperate logic from HabitListAdapter - which displays */
 public class HabitManager {
     private ViewHabit viewHabit;
-    private Handler mainHandler = new Handler(Looper.getMainLooper());
-
+    private Handler mainHandler = new Handler(Looper.getMainLooper()); // Handler to update UI
     public HabitManager(ViewHabit viewHabit) {
         this.viewHabit = viewHabit;
     }
 
+    // Thread to check if habit is completed
     public void checkIfHabitIsCompleted(Habit currentHabit, HabitListAdapter.HabitViewHolder holder) {
         new Thread(() -> {
             try {
                 Thread.sleep(60000); // 1 minute
 
+                // updates UI - if lastCompletedDate differs from the Current date, checkbox UI is reset
                 mainHandler.post(() -> {
                     String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                     if (!currentHabit.getLastCompletedDate().equals(currentDate)) {
@@ -37,30 +40,27 @@ public class HabitManager {
         }).start();
     }
 
+    // If marked as not completed - reset streak and update database
     public void setHabitAsNotCompleted(Habit currentHabit) {
-        // Reset the streak to 0
         currentHabit.setStreak(0);
-        // Update the completed field
         currentHabit.setIsCompleted(false);
-        // Log the action
         Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + false);
-        // Update the habit in the database
         viewHabit.update(currentHabit);
     }
+    // If marked as completed - update streak (if completed yesterday)
     public void setHabitAsCompleted(Habit currentHabit, LocationManager locationManager) {
         currentHabit.setIsCompleted(true);
-        // Check if the habit was completed yesterday
         if (isDateYesterday(currentHabit.getLastCompletedDate())) {
-            // If yes, increment the streak
             currentHabit.setStreak(currentHabit.getStreak() + 1);
         } else {
-            // If not, reset the streak to 1
             currentHabit.setStreak(1);
         }
 
+        // Logs its completed
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         currentHabit.setLastCompletedDate(currentDate);
         Log.d("HabitTracker", "Habit " + currentHabit.getHabitName() + " is completed: " + true);
+        // Location is logged and updated into database to be displayed 
         try {
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (location != null) {
@@ -75,6 +75,7 @@ public class HabitManager {
             e.printStackTrace();
         }
     }
+    // just to check if date is yesterday
     private boolean isDateYesterday(String date) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);

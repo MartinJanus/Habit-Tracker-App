@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
+// Activity for user to edit their habits
 public class HabitEditActivity extends AppCompatActivity {
     private EditText habitNameEdit;
     private EditText habitDescEdit;
@@ -40,6 +41,7 @@ public class HabitEditActivity extends AppCompatActivity {
         saveChangesButton = findViewById(R.id.buttonSaveChanges);
         viewHabit = new ViewModelProvider(this).get(ViewHabit.class);
 
+        // Bottom Navigation View - Consistent across all activities
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if(item.getItemId() == R.id.navigation_location) {
@@ -54,6 +56,7 @@ public class HabitEditActivity extends AppCompatActivity {
             return true;
         });
 
+        // retrieves habit based on habitID
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("habitId")) {
             int habitId = intent.getIntExtra("habitId", -1);
@@ -69,6 +72,7 @@ public class HabitEditActivity extends AppCompatActivity {
             }
         }
 
+        // start date selector - to update the start date
         startDateEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +93,7 @@ public class HabitEditActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+        // On clicking save - updates habit with new values in editText
         saveChangesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

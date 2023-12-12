@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+// Activity for the user to view a more detailed view of the habit
 public class HabitDetailActivity extends AppCompatActivity {
 
     private ViewHabit viewHabit;
@@ -36,6 +37,7 @@ public class HabitDetailActivity extends AppCompatActivity {
 
         viewHabit = new ViewModelProvider(this).get(ViewHabit.class);
 
+        // Bottom Navigation View - Consistent across all activities
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if(item.getItemId() == R.id.navigation_location) {
@@ -50,8 +52,8 @@ public class HabitDetailActivity extends AppCompatActivity {
             return true;
         });
 
+        // retrieves habit based on habitID, and displays habit details (sets text)
         Intent intent = getIntent();
-        //fix here
         int habitId = intent.getIntExtra("habitId", -1);
         if (intent != null && intent.hasExtra("habitId")) {
             if (habitId != -1) {
@@ -69,7 +71,7 @@ public class HabitDetailActivity extends AppCompatActivity {
             }
         }
 
-        //  Edit Habit Activity
+        //  Edit Habit Activity - Takes user to edit their habit based on habitID
         editHabitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+// Used to isolate ROOM database from the rest of the app
+// Structure: ViewHabit -> Repository -> DAO -> Database
 public class ViewHabit extends AndroidViewModel {
     private HabitRepository habitRepository;
     private LiveData<List<Habit>> allHabits;
@@ -29,9 +31,7 @@ public class ViewHabit extends AndroidViewModel {
         habitRepository.deleteAllHabits();
     }
 
-    public LiveData<List<Habit>> getAllHabits(){
-        return allHabits;
-    }
+    public LiveData<List<Habit>> getAllHabits(){ return allHabits; }
 
     public LiveData<Habit> getHabitById(int habitId) { return habitRepository.getHabitById(habitId); }
 

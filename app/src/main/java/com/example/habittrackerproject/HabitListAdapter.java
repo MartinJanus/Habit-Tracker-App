@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+// Adapter for RecyclerView in MainActivity
+// Reference: https://www.geeksforgeeks.org/android-recyclerview/
 public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.HabitViewHolder> {
 
     private HabitManager habitManager;
@@ -28,13 +30,15 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     private OnItemLongClickListener onItemLongClickListener;
     private LocationManager locationManager;
 
-
     @NonNull
     @Override
+    // HabitViewHolder is the layout for each item in the RecyclerView
     public HabitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.habit_list_item, parent, false);
         return new HabitViewHolder(itemView);
     }
+    // HabitListADapter constructor, takes in context and HabitManager for logic
+    // Adapter just handles the layout and display 
     public HabitListAdapter(Context context, HabitManager habitManager) {
         this.habitManager = habitManager;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -47,17 +51,15 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
     // Setting onClick listeners, CheckBoxes, and TextViews
     @Override
     public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
-        Habit currentHabit = habits.get(position);
-        holder.completedCheckBox.setOnCheckedChangeListener(null);
+        Habit currentHabit = habits.get(position); // Habit position indetifies which habit is being displayed
         holder.habitNameTextView.setText(currentHabit.getHabitName());
-        holder.completedCheckBox.setChecked(currentHabit.isCompleted());
 
         holder.completedCheckBox.setOnCheckedChangeListener(null);
         holder.completedCheckBox.setChecked(currentHabit.isCompleted());
 
         habitManager.checkIfHabitIsCompleted(currentHabit, holder);
 
-
+        // HabitManager seperates logic from the adapter - listens if a habit is completed or not
         holder.completedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             currentHabit.setIsCompleted(isChecked);
             if (isChecked) {
@@ -66,6 +68,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                 habitManager.setHabitAsNotCompleted(currentHabit);
             }
         });
+        // triggered on click
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +78,7 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
                 }
             }
         });
+        // triggerred on long click
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v){
@@ -89,11 +93,11 @@ public class HabitListAdapter extends RecyclerView.Adapter<HabitListAdapter.Habi
 
     @Override
     public int getItemCount() {
-        return habits.size();
+        return habits.size(); // returns the number of habits
     }
 
     public void setHabits(List<Habit> habits) {
-        this.habits = habits;
+        this.habits = habits; // sets the habits
         notifyDataSetChanged();
     }
 

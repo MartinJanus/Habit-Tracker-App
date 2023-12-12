@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView toolbarInfo;
     private TextView toolbarTitle;
     private BottomNavigationView bottomNavigationView;
-    private String currentDate;
-    private String currentDay;
     private HabitManager habitManager;
 
 
@@ -41,18 +39,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        //Date and Day
-        currentDate = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
-        currentDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date());
+        // Get current date and day with approrpiate format 
+        String currentDate = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
+        String currentDay = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(new Date());
 
-        //Top Bar (Fix for habits completed)
+        /* Topbar to display current date and day 
+         * example - "Monday" and "01-Jan-2024" 
+         */
         toolbarInfo = findViewById(R.id.toolbar_info);
-        toolbarInfo.setText(currentDate + "  "); //+ completedHabits + "/" + totalHabits + " Habits Completed");
+        toolbarInfo.setText(currentDate);
 
         toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(currentDay);
 
-        //Bottom Nav Bar
+        /* Bottom Navigation Bar 
+         * Location icon takes you to location view 
+         * Today icon takes you to main activity
+         * Reference: https://www.geeksforgeeks.org/bottomnavigationview-inandroid/
+        */
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if(item.getItemId() == R.id.navigation_location) {
@@ -67,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        // Recycler View
+        /* Recycler View
+         * Finds recycler view and sets up the adapter
+         * Layout Manager is set to linear layout - Required for functionality
+         */
         habitRecyclerView = findViewById(R.id.habitRecyclerView);
         addHabitButton  = findViewById(R.id.addHabitButton);
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
@@ -75,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         habitListAdapter = new HabitListAdapter(this, habitManager);
         habitRecyclerView.setAdapter(habitListAdapter);
         habitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Gets all habits from ROOM db and sets them to the adapter
         viewHabit.getAllHabits().observe(this, new Observer<List<Habit>>() {
             @Override
             public void onChanged(List<Habit> habits) {
@@ -82,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Detailed View, Clicking on the Item.
+        // Detailed View - Clicking on a habit item
         habitListAdapter.setOnItemClickListener(new HabitListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Habit habit) {
@@ -91,8 +100,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        
-        //Deleting Habits
+
+        /* Deleting Habits - Long Clicking on a habit item 
+         * Dialog box to confirm deletion
+        */
         habitListAdapter.setOnItemLongClickListener(new HabitListAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(Habit habit) {
@@ -110,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Adding Habits
+        // Adding Habits - Clicking on the add habit button
         addHabitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

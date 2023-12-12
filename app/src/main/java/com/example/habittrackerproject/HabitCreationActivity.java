@@ -19,8 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/* Activity for user to create their habits */
 public class HabitCreationActivity extends AppCompatActivity {
-
     private EditText editTextHabitName;
     private EditText editTextHabitDescription;
     private ViewHabit viewHabit;
@@ -38,8 +38,10 @@ public class HabitCreationActivity extends AppCompatActivity {
         editTextStartDate = findViewById(R.id.editTextStartDate);
         buttonCreateHabit = findViewById(R.id.buttonCreateHabit);
 
+        // View Habit to access database
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
 
+        // Bottom Navigation View - Consistent across all activities
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if(item.getItemId() == R.id.navigation_location) {
@@ -54,7 +56,10 @@ public class HabitCreationActivity extends AppCompatActivity {
             return true;
         });
 
-        //Start Date Selector
+        /* Start Date Selector  
+         * Get current date and day with approrpiate format
+         * Sets Text to editTextStartDate
+        */
         editTextStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +80,10 @@ public class HabitCreationActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-        // Habit Creation Button
+        /*Habit Creation Button
+         * Checks if habit name is empty - if not then creates habit
+         * Toast message to confirm creation 
+        */
         buttonCreateHabit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

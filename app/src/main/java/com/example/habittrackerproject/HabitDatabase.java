@@ -11,8 +11,12 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Habit.class}, version = 1)
+
+/* Reference: https://www.geeksforgeeks.org/how-to-perform-crud-operations-in-room-database-in-android/ 
+ * Adapted for HabitTrackerProject
+*/
 public abstract class HabitDatabase extends RoomDatabase {
-    //create instance for database class
+    // create instance for database class
     private static HabitDatabase instance;
     public abstract HabitDAO habitDAO();
 
@@ -32,7 +36,7 @@ public abstract class HabitDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            //method is called when database is created and below to populate data
+            // method is called when database is created and below to populate data
             new PopulateDbAsyncTask(instance).execute();
         }
     };

@@ -8,7 +8,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-//Used to isolate data sources (Room Database) from the rest of the app
+// Reference: https://www.geeksforgeeks.org/how-to-perform-crud-operations-in-room-database-in-android/
+// Repository to access the DAO which accesses the Database 
 public class HabitRepository {
     private HabitDAO habitDAO;
     private LiveData<List<Habit>> allHabits;

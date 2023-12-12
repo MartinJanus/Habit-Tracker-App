@@ -13,19 +13,19 @@ import java.util.List;
 @androidx.room.Dao
 public interface HabitDAO {
 
-    //adding data
+    // adding data
     @Insert
     void insert(Habit habit);
 
-    //updating data
+    // updating data
     @Update
     void update(Habit habit);
 
-    //deleting habits
+    // deleting habits
     @Delete
     void delete(Habit habit);
 
-    //deleting all habits
+    // deleting all habits
     @Query("DELETE FROM habit_table")
     void deleteAllHabits();
 

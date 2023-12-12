@@ -19,6 +19,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
+/* Activity for user to view their habits on a map 
+ * Reference: https://www.geeksforgeeks.org/google-maps-in-android/
+*/
 public class LocationViewActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private ViewHabit viewHabit;
@@ -31,11 +34,13 @@ public class LocationViewActivity extends AppCompatActivity implements OnMapRead
         setContentView(R.layout.activity_location);
         viewHabit = new ViewModelProvider(this).get((ViewHabit.class));
 
+        // Get map fragment and load map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.habitMap);
         mapFragment.getMapAsync(this);
 
         completedHabits = viewHabit.getCompletedHabits();
 
+        // Bottom Navigation View - Consistent across all activities
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if(item.getItemId() == R.id.navigation_location) {
@@ -54,7 +59,7 @@ public class LocationViewActivity extends AppCompatActivity implements OnMapRead
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        float zLevel = 12.0f;
+        float zLevel = 12.0f; // Zoom level for map
 
         // For each habit, add a marker to the map
         completedHabits.observe(this, new Observer<List<Habit>>() {
@@ -63,10 +68,11 @@ public class LocationViewActivity extends AppCompatActivity implements OnMapRead
                 for (Habit habit : habits) {
                     double latitude = habit.getLatitude();
                     double longitude = habit.getLongitude();
+                    // checks if latitude and longitude are valid
                     if (!Double.isNaN(latitude) && !Double.isNaN(longitude)) {
                         LatLng location = new LatLng(latitude, longitude);
-                        mMap.addMarker(new MarkerOptions().position(location).title(habit.getHabitName()));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zLevel));
+                        mMap.addMarker(new MarkerOptions().position(location).title(habit.getHabitName())); // marker contains title of habit name
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zLevel)); // Zooms in on marker
                     }
                 }
             }
