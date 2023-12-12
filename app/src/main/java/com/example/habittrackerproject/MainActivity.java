@@ -47,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
          * example - "Monday" and "01-Jan-2024" 
          */
         toolbarInfo = findViewById(R.id.toolbar_info);
-        toolbarInfo.setText(currentDate);
+        toolbarInfo.setText(currentDate + " ");
 
         toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(currentDay + " ");
+        toolbarTitle.setText(currentDay);
 
         /* Bottom Navigation Bar 
          * Location icon takes you to location view 
