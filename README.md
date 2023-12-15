@@ -1,8 +1,10 @@
 # Habit Tracker App
 Android application written in Java using Android Studio as part of my Mobile Software Development module.
+
+An application intended to help user build habits, reach daily goals and build a routine. 
 ### Main functionality:
 - User can create habits with a name, description and start date.
-- Habits can be viewed, edited and deleted on a long press.
+- Habits can be viewed, edited and deleted.
 - Habits are tracked upon clicking a checkbox.
 - Location is logged, and a streak is started.
 - Checkbox resets at the start of a new day.
